@@ -34,6 +34,10 @@
       --r24:24px;
       --t: 180ms cubic-bezier(.2,.8,.2,1);
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+
+      /* ===== Layout standardization ===== */
+      --app-max: 560px;   /* consistent centered width */
+      --ctrl-max: 520px;  /* consistent control width */
     }
 
     html,body{height:100%;}
@@ -61,6 +65,7 @@
     }
 
     .wrap{min-height:100%;display:flex;flex-direction:column;}
+
     header{
       position:sticky;top:0;z-index:10;
       backdrop-filter: blur(12px);
@@ -98,8 +103,19 @@
     }
     .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px rgba(40,209,124,.12);}
 
-    main{flex:1;display:flex;justify-content:center;padding:48px 18px 64px;}
-    .stage{width:100%;max-width:520px;}
+    /* ===== Center the app consistently on desktop ===== */
+    main{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding:48px 18px 64px;
+    }
+    .stage{
+      width:100%;
+      max-width:var(--app-max);
+      margin:0 auto;
+    }
 
     .card{
       background: linear-gradient(180deg, rgba(14,22,48,.92), rgba(11,18,39,.92));
@@ -107,17 +123,34 @@
       box-shadow: var(--shadow);
       border-radius: var(--r24);
       overflow:hidden;position:relative;
+      margin:0 auto;
     }
     .card::after{
       content:"";position:absolute;inset:-2px;
       background: radial-gradient(420px 240px at 20% 0%, rgba(47,123,255,.18), transparent 60%);
       pointer-events:none;
     }
-    .card-inner{position:relative;padding:18px;}
 
-    .card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 2px 14px;}
-    .title{font-size:18px;font-weight:850;letter-spacing:.2px;margin:0;}
-    .subtitle{font-size:12px;color:var(--muted2);margin-top:4px;}
+    /* Center all sections while keeping headers/subheads left aligned */
+    .card-inner{
+      position:relative;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+    .card-inner > *{
+      width:100%;
+      max-width:var(--ctrl-max);
+    }
+
+    .card-top{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:4px 2px 14px;
+      text-align:left;
+    }
+    .title{font-size:18px;font-weight:850;letter-spacing:.2px;margin:0;text-align:left;}
+    .subtitle{font-size:12px;color:var(--muted2);margin-top:4px;text-align:left;}
 
     .ghost-btn{
       appearance:none;
@@ -130,18 +163,27 @@
       font-weight:750;font-size:13px;
       position:relative;
       white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
     .ghost-btn:hover{background:rgba(255,255,255,.06);transform:translateY(-1px);}
     .ghost-btn:active{transform:translateY(0px);}
 
+    /* Standardize primary button width/centering */
     .primary{
       appearance:none;border:none;
       background: linear-gradient(180deg, var(--blue), var(--blue2));
       color:white;padding:14px 14px;border-radius:16px;
-      cursor:pointer;font-weight:850;letter-spacing:.2px;font-size:14px;width:100%;
+      cursor:pointer;font-weight:850;letter-spacing:.2px;font-size:14px;
+      width:100%;
+      max-width:var(--ctrl-max);
+      margin:0 auto;
+      display:block;
       transition: transform var(--t), filter var(--t), opacity var(--t);
       box-shadow: 0 16px 30px rgba(47,123,255,.18);
       position:relative;
+      text-align:center;
     }
     .primary:hover{filter:brightness(1.06);transform:translateY(-1px);}
     .primary:active{transform:translateY(0px);}
@@ -162,25 +204,39 @@
       box-shadow: 0 8px 16px rgba(0,0,0,.28);
     }
 
+    /* Center panels/controls while keeping text left aligned inside */
     .panel{
       background: rgba(0,0,0,.16);
       border: 1px solid rgba(255,255,255,.08);
       border-radius: 18px;
-      padding:14px;margin-top:12px;
+      padding:14px;
+      margin-top:12px;
+      width:100%;
+      max-width:var(--ctrl-max);
+      margin-left:auto;
+      margin-right:auto;
+      text-align:left;
     }
-    .panel-hd{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted2);margin-bottom:10px;}
+    .panel-hd{
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:12px;color:var(--muted2);margin-bottom:10px;
+      text-align:left;
+    }
     .row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+
+    /* Standardize token buttons (same height, consistent feel) */
     .token-btn{
       display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(255,255,255,.04);
       color:var(--text);cursor:pointer;
       transition: transform var(--t), background var(--t), border-color var(--t);
-      font-weight:850;min-width:160px;justify-content:space-between;
+      font-weight:850;min-width:170px;justify-content:space-between;
+      height:44px;
     }
     .token-btn:hover{background:rgba(255,255,255,.06);transform:translateY(-1px);}
     .token-left{display:flex;align-items:center;gap:10px;min-width:0;}
-    .token-name{font-size:13px;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width: 160px;}
+    .token-name{font-size:13px;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width: 180px;}
     .chev{
       width:10px;height:10px;border-right:2px solid rgba(234,240,255,.70);border-bottom:2px solid rgba(234,240,255,.70);
       transform: rotate(45deg);margin-left:6px;flex:none;
@@ -207,7 +263,10 @@
       font-size:26px;font-weight:900;letter-spacing:.2px;text-align:right;padding:0;
     }
     .amt input::placeholder{color:rgba(234,240,255,.28);}
-    .hint{margin-top:8px;font-size:12px;color:var(--muted2);display:flex;justify-content:space-between;align-items:center;gap:12px;}
+    .hint{
+      margin-top:8px;font-size:12px;color:var(--muted2);
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+    }
 
     .divider{display:flex;justify-content:center;margin:10px 0;}
     .swap-arrow{
@@ -216,8 +275,15 @@
       display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow2);
     }
 
-    /* spacing fix so Trade button never crowds/covers fineprint */
-    .fineprint{margin-top:16px;font-size:12px;color:rgba(234,240,255,.55);line-height:2.45;}
+    /* Standardize text spacing: bottom small text centered */
+    .fineprint{
+      margin:16px auto 0;
+      font-size:12px;
+      color:rgba(234,240,255,.55);
+      line-height:1.7;
+      text-align:center;
+      max-width:var(--ctrl-max);
+    }
 
     .modal-backdrop{
       position:fixed;inset:0;background:rgba(0,0,0,.72);
@@ -239,6 +305,7 @@
       padding:18px 18px 12px;
       display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
       border-bottom:1px solid rgba(255,255,255,.06);
+      text-align:left;
     }
     .modal-hd-left{display:flex;align-items:flex-start;gap:12px;min-width:0;}
     .modal-icon{
@@ -249,7 +316,7 @@
       border: 1px solid rgba(255,255,255,.10);
       box-shadow: 0 14px 30px rgba(0,0,0,.35);
     }
-    .modal-title{margin:0;font-size:18px;font-weight:950;letter-spacing:.1px;line-height:1.2;word-break:break-word;}
+    .modal-title{margin:0;font-size:18px;font-weight:950;letter-spacing:.1px;line-height:1.2;word-break:break-word;text-align:left;}
     .modal-title.danger{color:var(--danger);}
     .modal-title.warn{color:var(--warn);}
     .modal-title.good{color:var(--good);}
@@ -263,7 +330,7 @@
       flex:none;
     }
     .modal-x:hover{background:rgba(255,255,255,.07);transform:translateY(-1px);}
-    .modal-bd{padding:16px 18px 18px;color:rgba(234,240,255,.86);line-height:1.55;font-size:14px;}
+    .modal-bd{padding:16px 18px 18px;color:rgba(234,240,255,.86);line-height:1.55;font-size:14px;text-align:left;}
 
     .bullets{
       margin:14px 0 0;padding:0;list-style:none;
@@ -290,13 +357,22 @@
       margin-top:10px;
       text-align:center;
     }
-    .modal-ft{padding:16px 18px 18px;display:flex;gap:12px;border-top:1px solid rgba(255,255,255,.06);}
+    .modal-ft{
+      padding:16px 18px 18px;
+      display:flex;gap:12px;
+      border-top:1px solid rgba(255,255,255,.06);
+      justify-content:center;
+    }
     .btn{
-      flex:1;padding:13px 14px;border-radius:16px;
+      flex:1;
+      padding:13px 14px;
+      border-radius:16px;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(255,255,255,.05);
       color:var(--text);font-weight:900;cursor:pointer;
       transition: transform var(--t), background var(--t);
+      text-align:center;
+      max-width:240px;
     }
     .btn:hover{background:rgba(255,255,255,.07);transform:translateY(-1px);}
     .btn:active{transform:translateY(0px);}
@@ -380,11 +456,18 @@
     }
 
     @media (max-width:540px){
-      .stage{max-width:100%;}
-      .card-inner{padding:16px;}
+      main{padding:22px 12px 36px;}
+      .card-inner{padding:14px;}
       .token-btn{min-width:150px;}
-      .amt input{font-size:24px;}
+      .amt input{font-size:22px;}
+      .wallet-title{font-size:24px;}
     }
+
+    /* “Zoom out” on small phones without relying on browser zoom */
+    @media (max-width:380px){
+      .stage{transform:scale(.94);transform-origin: top center;}
+    }
+
     button:focus-visible,.token-btn:focus-visible,.ghost-btn:focus-visible,input:focus-visible,select:focus-visible{
       outline:2px solid rgba(47,123,255,.85);
       outline-offset:2px;
@@ -393,6 +476,8 @@
     /* ===== Connect-wallet dropdown button (brighter + larger) ===== */
     .select-primary{
       width:100%;
+      max-width:var(--ctrl-max);
+      margin:14px auto 0;
       display:flex;align-items:center;gap:12px;
       padding:14px 14px;
       border-radius:18px;
@@ -400,10 +485,12 @@
       background: linear-gradient(180deg, rgba(79,140,255,.30), rgba(28,109,255,.22));
       box-shadow: 0 18px 36px rgba(47,123,255,.22);
       position:relative;
+      justify-content:space-between;
     }
     .select-primary .label{
       font-weight:950;letter-spacing:.2px;font-size:15px;white-space:nowrap;
       padding-left:34px;position:relative;
+      text-align:left;
     }
     .select-primary .label::before{
       content:"";
@@ -440,23 +527,27 @@
       position:absolute;left:14px;right:14px;bottom:-8px;
       font-size:11px;color:rgba(234,240,255,.55);
       transform: translateY(100%);
+      text-align:center;
     }
 
     /* ===== Wallet page ===== */
     .wallet-top{
       display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
       padding:2px 2px 12px;
+      text-align:left;
     }
     .wallet-title{
       font-size:28px;
       font-weight:1000;
       letter-spacing:.2px;
       margin:0 0 10px 0;
+      text-align:left;
     }
     .wallet-balance{
       display:flex;align-items:center;gap:10px;
       font-weight:950;letter-spacing:.2px;
       color: rgba(234,240,255,.95);
+      text-align:left;
     }
     .wallet-balance .ring{
       width:22px;height:22px;border-radius:50%;
@@ -469,6 +560,9 @@
     }
     .wallet-search{
       margin-top:10px;
+      width:100%;
+      max-width:var(--ctrl-max);
+      margin-left:auto;margin-right:auto;
       display:flex;gap:10px;align-items:center;
       padding:12px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.10);
       background:rgba(0,0,0,.14);
@@ -481,6 +575,9 @@
     }
     .wallet-list{
       margin-top:10px;
+      width:100%;
+      max-width:var(--ctrl-max);
+      margin-left:auto;margin-right:auto;
       border:1px solid rgba(255,255,255,.08);
       border-radius:18px;
       overflow:hidden;
@@ -499,7 +596,12 @@
     .wright .wamt{font-weight:1000;letter-spacing:.2px;}
     .wright .wusd{font-size:12px;color:rgba(234,240,255,.55);margin-top:3px;}
 
-    .wallet-cta{margin-top:14px;}
+    .wallet-cta{
+      margin-top:14px;
+      width:100%;
+      max-width:var(--ctrl-max);
+      margin-left:auto;margin-right:auto;
+    }
 
     .wallet-bottom{
       margin-top:12px;
@@ -508,6 +610,8 @@
       border-top:1px solid rgba(255,255,255,.08);
       color:rgba(234,240,255,.55);
       font-size:12px;
+      max-width:var(--ctrl-max);
+      margin-left:auto;margin-right:auto;
     }
     .wallet-bottom .tab{
       flex:1;
@@ -527,22 +631,26 @@
 
     /* ===== Bank page ===== */
     .bank-brand{
-      font-size:18px; /* larger */
+      font-size:18px;
       color: rgba(234,240,255,.70);
       font-weight:950;
       letter-spacing:.25px;
       margin-top:2px;
+      text-align:left;
     }
     .bank-actions{
       margin-top:12px;
       display:flex;
       flex-direction:column;
       gap:12px;
+      align-items:center; /* center the controls container */
     }
 
     /* Make bank dropdown match swap connect style */
     .bank-select{
       width:100%;
+      max-width:var(--ctrl-max);
+      margin:0 auto;
       display:flex;align-items:center;gap:12px;justify-content:space-between;
       padding:14px 14px;
       border-radius:18px;
@@ -553,6 +661,7 @@
     .bank-select .left{
       display:flex;align-items:center;gap:10px;
       font-weight:950;letter-spacing:.15px;
+      text-align:left;
     }
     .bank-select select{
       margin-left:auto;
@@ -685,21 +794,20 @@
             </div>
           </div>
 
-          <!-- ===== FIRST-PAGE ACTION: CONNECT WALLET dropdown (kept; brighter + larger) ===== -->
-          <div id="connectWalletWrap" style="margin-top:14px;">
+          <!-- ===== FIRST-PAGE ACTION: CONNECT WALLET dropdown (kept) ===== -->
+          <div id="connectWalletWrap">
             <div class="select-primary" role="group" aria-label="Connect Wallet">
               <div class="label">Connect Wallet</div>
               <select id="walletSelect" aria-label="Select wallet to connect">
                 <option value="" selected disabled>Select wallet…</option>
                 <option value="Calypso Wallet">Calypso Wallet</option>
                 <option value="Antelope Wallet">Antelope Wallet</option>
-          </select>
-            </div>
+              </select>
             </div>
           </div>
 
-          <!-- ===== AFTER BANK CONNECT: TRADE button (original swap behavior) ===== -->
-          <button class="primary has-brand" id="swapBtn" type="button" style="margin-top:45px;margin-bottom: 7px;" disabled>Connect wallet</button>
+          <!-- ===== TRADE button (ONLY appears after bank connect; separate from connect wallet) ===== -->
+          <button class="primary has-brand" id="tradeBtn" type="button" style="margin-top:14px;display:none;" disabled>Trade</button>
 
           <p class="fineprint">Static UI simulation: no real wallet signing, no real blockchain interaction.</p>
         </div>
@@ -757,7 +865,7 @@
 
           <div class="bank-actions">
             <!-- Hidden until user continues past info modal -->
-            <div id="bankSelectWrap" style="display:none;">
+            <div id="bankSelectWrap" style="display:none;width:100%;max-width:var(--ctrl-max);margin:0 auto;">
               <div class="bank-select">
                 <div class="left">
                   <span class="ticon dark" aria-hidden="true">🏦</span>
@@ -770,7 +878,7 @@
               </div>
             </div>
 
-            <button class="primary" id="bankConnectBtn" type="button" disabled>Select Bank Account</button>
+            <button class="primary" id="bankConnectBtn" type="button" style="margin:0 auto;" disabled>Select Bank Account</button>
           </div>
         </div>
       </section>
@@ -983,9 +1091,14 @@
     $("toAmount").value = "";
     $("toUsd").textContent = "~$0.00";
 
+    // Trade button is separate and only appears after bank connect
+    $("tradeBtn").style.display = "none";
+    $("tradeBtn").disabled = true;
+    $("tradeBtn").textContent = "Trade";
+
     setToToken(toToken);
     setHeaderPill();
-    refreshSwapButton();
+    refreshTradeButton();
     recalc();
     showPage("swap");
   }
@@ -1302,21 +1415,21 @@
     $("fromTokenName").textContent = name || "Select token";
     $("fromIcon").textContent = ICON_TEXT[name] || "?";
     $("fromHint").textContent = name ? `Price: $${fmtPrice(PRICES[name])}` : "Price: —";
-    refreshSwapButton();
+    refreshTradeButton();
     recalc();
   }
   function setToToken(name){
     toToken = name;
     $("toTokenName").textContent = name || "Select token";
     $("toIcon").textContent = ICON_TEXT[name] || "T";
-    refreshSwapButton();
+    refreshTradeButton();
     recalc();
   }
   function setRecipient(name){
     recipient = name;
     $("recipientName").textContent = name || "Select counterparty";
     $("recIcon").textContent = name ? name.slice(0,1).toUpperCase() : "R";
-    refreshSwapButton();
+    refreshTradeButton();
   }
 
   function fmtPrice(p){
@@ -1326,17 +1439,19 @@
     return p.toLocaleString(undefined,{maximumFractionDigits:4});
   }
 
-  function refreshSwapButton(){
-    const btn = $("swapBtn");
+  // Trade button is separate from "connect wallet" and only appears after bank connect
+  function refreshTradeButton(){
+    const btn = $("tradeBtn");
 
-    // Before bank connect, the primary action is the wallet dropdown, not trading
     if (!bankConnected) {
+      btn.style.display = "none";
       btn.disabled = true;
-      btn.textContent = walletConnected ? "Complete on-ramp to trade" : "Connect wallet";
+      btn.textContent = "Trade";
       return;
     }
 
-    // After bank connect, restore the original swap behavior
+    btn.style.display = "block";
+
     const amt = ($("amountInput").value || "").trim();
     const amtNum = Number(amt);
 
@@ -1401,7 +1516,7 @@
           $("walletNameLine").textContent = walletName;
           renderWalletList();
           setHeaderPill();
-          refreshSwapButton();
+          refreshTradeButton();
           showPage("wallet");
         }}
       ]
@@ -1518,7 +1633,7 @@
           bankConnected = true;
           setHeaderPill();
           showPage("swap");
-          refreshSwapButton();
+          refreshTradeButton();
         }}
       ]
     });
@@ -1533,7 +1648,7 @@
     showPage("wallet");
   });
 
-  // ===== Swap interaction wiring (unchanged, except gating by bankConnected) =====
+  // ===== Swap interaction wiring =====
   $("fromTokenBtn").addEventListener("click", () => {
     pickerModal({
       title: "Select a token",
@@ -1562,7 +1677,7 @@
   });
 
   $("amountInput").addEventListener("input", () => {
-    refreshSwapButton();
+    refreshTradeButton();
     recalc();
   });
 
@@ -1571,9 +1686,9 @@
     $("amountInput").dispatchEvent(new Event("input"));
   });
 
-  $("swapBtn").addEventListener("click", () => {
-    refreshSwapButton();
-    if ($("swapBtn").disabled) return;
+  $("tradeBtn").addEventListener("click", () => {
+    refreshTradeButton();
+    if ($("tradeBtn").disabled) return;
 
     if (!bankConnected) return;
 
@@ -1592,7 +1707,7 @@
   $("toHint").textContent = "Estimated: —";
   renderWalletList();
   setHeaderPill();
-  refreshSwapButton();
+  refreshTradeButton();
   recalc();
   showPage("swap");
 </script>
