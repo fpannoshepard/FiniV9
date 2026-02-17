@@ -23,8 +23,8 @@
       --blue2:#0a5bff;
 
       /* ===== Brighter blue for the swap-page wallet selector ===== */
-      --blueBright:#4f8cff;
-      --blueBright2:#1c6dff;
+      --blueBright:#69a2ff;
+      --blueBright2:#2d82ff;
 
       --danger:#ff3b3b;
       --warn:#ffcc66;
@@ -36,8 +36,8 @@
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
 
       /* ===== Layout standardization ===== */
-      --app-max: 560px;   /* consistent centered width */
-      --ctrl-max: 520px;  /* consistent control width */
+      --app-max: 560px;
+      --ctrl-max: 520px;
     }
 
     html,body{height:100%;}
@@ -131,7 +131,7 @@
       pointer-events:none;
     }
 
-    /* Center all sections while keeping headers/subheads left aligned */
+    /* ===== Center all "boxes" (panels/lists/selects) that hold controls ===== */
     .card-inner{
       position:relative;
       padding:18px;
@@ -142,6 +142,8 @@
     .card-inner > *{
       width:100%;
       max-width:var(--ctrl-max);
+      margin-left:auto;
+      margin-right:auto;
     }
 
     .card-top{
@@ -216,6 +218,7 @@
       margin-left:auto;
       margin-right:auto;
       text-align:left;
+      box-sizing:border-box;
     }
     .panel-hd{
       display:flex;justify-content:space-between;align-items:center;
@@ -235,6 +238,7 @@
       height:44px;
     }
     .token-btn:hover{background:rgba(255,255,255,.06);transform:translateY(-1px);}
+
     .token-left{display:flex;align-items:center;gap:10px;min-width:0;}
     .token-name{font-size:13px;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width: 180px;}
     .chev{
@@ -473,53 +477,54 @@
       outline-offset:2px;
     }
 
-    /* ===== Connect-wallet dropdown button (brighter + larger) ===== */
+    /* ===== Connect-wallet dropdown (FIRST PAGE) - larger + brighter ===== */
     .select-primary{
       width:100%;
       max-width:var(--ctrl-max);
-      margin:14px auto 0;
-      display:flex;align-items:center;gap:12px;
-      padding:14px 14px;
-      border-radius:18px;
-      border: 1px solid rgba(79,140,255,.28);
-      background: linear-gradient(180deg, rgba(79,140,255,.30), rgba(28,109,255,.22));
-      box-shadow: 0 18px 36px rgba(47,123,255,.22);
+      margin:16px auto 0;
+      display:flex;align-items:center;gap:14px;
+      padding:18px 16px;                 /* larger */
+      border-radius:20px;
+      border: 1px solid rgba(105,162,255,.55);
+      background: linear-gradient(180deg, rgba(105,162,255,.42), rgba(45,130,255,.32)); /* brighter */
+      box-shadow: 0 22px 44px rgba(47,123,255,.32);
       position:relative;
       justify-content:space-between;
     }
     .select-primary .label{
-      font-weight:950;letter-spacing:.2px;font-size:15px;white-space:nowrap;
-      padding-left:34px;position:relative;
+      font-weight:1000;letter-spacing:.2px;font-size:16px;
+      white-space:nowrap;
+      padding-left:38px;position:relative;
       text-align:left;
     }
     .select-primary .label::before{
       content:"";
       position:absolute;left:0;top:50%;transform:translateY(-50%);
-      width:24px;height:24px;border-radius:9px;
+      width:28px;height:28px;border-radius:10px;
       background-image: var(--ba-logo);
       background-size:cover;background-position:center;background-repeat:no-repeat;
-      outline:1px solid rgba(255,255,255,.10);
-      box-shadow: 0 10px 20px rgba(0,0,0,.28);
+      outline:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 12px 24px rgba(0,0,0,.28);
     }
     .select-primary select{
       margin-left:auto;
-      min-width:220px;
-      background: rgba(0,0,0,.26);
-      border: 1px solid rgba(255,255,255,.14);
+      min-width:240px;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.18);
       color: var(--text);
-      padding:12px 14px;
-      border-radius:16px;
-      font-weight:900;
-      font-size:14px;
+      padding:14px 16px;                /* larger */
+      border-radius:18px;
+      font-weight:950;
+      font-size:15px;
       cursor:pointer;
       appearance:none;
       background-image:
-        linear-gradient(45deg, transparent 50%, rgba(234,240,255,.80) 50%),
-        linear-gradient(135deg, rgba(234,240,255,.80) 50%, transparent 50%);
+        linear-gradient(45deg, transparent 50%, rgba(234,240,255,.88) 50%),
+        linear-gradient(135deg, rgba(234,240,255,.88) 50%, transparent 50%);
       background-position:
-        calc(100% - 20px) 50%,
-        calc(100% - 13px) 50%;
-      background-size:7px 7px, 7px 7px;
+        calc(100% - 22px) 50%,
+        calc(100% - 15px) 50%;
+      background-size:8px 8px, 8px 8px;
       background-repeat:no-repeat;
     }
     .select-primary select:disabled{opacity:.55;cursor:not-allowed;}
@@ -530,7 +535,7 @@
       text-align:center;
     }
 
-    /* ===== Wallet page ===== */
+    /* ===== Wallet page: center boxes ===== */
     .wallet-top{
       display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
       padding:2px 2px 12px;
@@ -567,6 +572,7 @@
       padding:12px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.10);
       background:rgba(0,0,0,.14);
       color:rgba(234,240,255,.70);
+      box-sizing:border-box;
     }
     .wallet-search input{
       width:100%;
@@ -582,6 +588,7 @@
       border-radius:18px;
       overflow:hidden;
       background:rgba(0,0,0,.10);
+      box-sizing:border-box;
     }
     .wrow{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
@@ -629,7 +636,7 @@
       background: rgba(47,123,255,.10);
     }
 
-    /* ===== Bank page ===== */
+    /* ===== Bank page: center boxes ===== */
     .bank-brand{
       font-size:18px;
       color: rgba(234,240,255,.70);
@@ -643,10 +650,9 @@
       display:flex;
       flex-direction:column;
       gap:12px;
-      align-items:center; /* center the controls container */
+      align-items:center;
     }
 
-    /* Make bank dropdown match swap connect style */
     .bank-select{
       width:100%;
       max-width:var(--ctrl-max);
@@ -657,6 +663,7 @@
       border: 1px solid rgba(79,140,255,.22);
       background: linear-gradient(180deg, rgba(79,140,255,.18), rgba(28,109,255,.12));
       box-shadow: 0 14px 30px rgba(47,123,255,.14);
+      box-sizing:border-box;
     }
     .bank-select .left{
       display:flex;align-items:center;gap:10px;
@@ -794,7 +801,7 @@
             </div>
           </div>
 
-          <!-- ===== FIRST-PAGE ACTION: CONNECT WALLET dropdown (kept) ===== -->
+          <!-- ===== FIRST-PAGE ACTION: CONNECT WALLET dropdown (larger + brighter) ===== -->
           <div id="connectWalletWrap">
             <div class="select-primary" role="group" aria-label="Connect Wallet">
               <div class="label">Connect Wallet</div>
